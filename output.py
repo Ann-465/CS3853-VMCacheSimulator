@@ -72,7 +72,7 @@ def save_output(filename):
         sys.stdout = DualOutput()
 
         try:
-            print_header("XX", "A-9_new_trunk.trc")
+            print_header("2", "A-9_new_trunk.trc")
             print_input_parameters(512, 16, 4, "Round Robin", 1024, 75, 100)
             print_cache_calculated_values(32768, 13, 13, 8192, 57344, 581632, 39.76)
             print_physical_memory_values(262144, 196608, 19, 3735552)
@@ -82,4 +82,4 @@ def save_output(filename):
 
     
 if __name__ == "__main__":
-    save_output("Team_XX_Milestone1_TEST.txt")
+    save_output("Team_2_Milestone1_TEST.txt")
