@@ -1,5 +1,6 @@
 import argparse
 import os
+from contextlib import redirect_stdout
 
 from cache_calculate import (
     numBlocks, tagsize, numRows, indexsize,
@@ -100,29 +101,30 @@ def main():
     )
 
     # Print results
-    print_header(2, trace_files)
-
-    policy_name = (
-        "Round Robin" if replacement_policy == "RR"
-        else "Random"
-    )
-
-    print_input_parameters(
-        cache_size, block_size, associativity,
-        policy_name, physical_memory,
-        system_percent, time_slice
-    )
-
-    print_cache_calculated_values(
-        total_blocks, tag_bits, index_bits,
-        total_rows, overhead_bytes,
-        implementation_bytes, total_cost
-    )
-
-    print_physical_memory_values(
-        num_physical_pages, num_system_pages,
-        pte_bits, page_table_bytes
-    )
+    with open("output.txt", "w") as f:
+        with redirect_stdout(f):
+            print_header(2, trace_files)
+            policy_name = (
+                    "Round Robin" if replacement_policy == "RR"
+                    else "Random"
+                )
+            
+            print_input_parameters(
+                    cache_size, block_size, associativity,
+                    policy_name, physical_memory,
+                    system_percent, time_slice
+                )
+            
+            print_cache_calculated_values(
+                    total_blocks, tag_bits, index_bits,
+                    total_rows, overhead_bytes,
+                    implementation_bytes, total_cost
+                )
+            
+            print_physical_memory_values(
+                    num_physical_pages, num_system_pages,
+                    pte_bits, page_table_bytes
+                )
 
 
 if __name__ == "__main__":
