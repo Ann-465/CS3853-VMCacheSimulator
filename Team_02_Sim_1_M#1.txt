@@ -1,7 +1,7 @@
 Cache Simulator - CS 3853 - Team #2
 
 Trace File(s):
-A-9_new_trunk.py
+A-9_new_trunk.trc
 
 ***** Cache Input Parameters *****
 
