@@ -50,7 +50,8 @@ def print_header(team_number, trace_file):
     print(f"Cache Simulator - CS 3853 - Team #{team_number}")
     print()
     print("Trace File(s):")
-    print(f"    {trace_file}")
+    for trace_file in trace_file:
+        print(trace_file)
     print()
 
 import sys

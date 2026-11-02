@@ -7,10 +7,10 @@ def numBlocks(size, block_size):
 
 def tagsize(phys_mem, block_size, index_bits):
     # Calculate the number of bits needed for the tag
-    physical_address_bits = math.log2(phys_mem * 1024 * 1024)
-    block_offset_bits = math.log2(block_size)
-    tag_bits = physical_address_bits - block_offset_bits - index_bits
-    return tag_bits
+    physical_address_bits = (phys_mem * 1024 * 1024).bit_length() - 1
+    block_offset_bits = block_size.bit_length() - 1
+
+    return physical_address_bits - block_offset_bits - index_bits
 
 def numRows(num_blocks, associativity):
     # Calculate the number of rows in the cache
@@ -30,11 +30,10 @@ def overheadsize(num_blocks, tag_bits):
 def implement_mem_size(cache_size, overhead_bits):
     # Calculate the total memory size needed for the cache
     total_mem_size = cache_size * 1024 + overhead_bits
-    # convert to KB
-    total_mem_size /= 1024
     return total_mem_size
 
 def cost(total_mem_size):
     # Calculate the cost of the cache based on the physical memory and block size
+    total_mem_size /= 1024 # Convert to KB
     total_cost = total_mem_size * 0.07
     return total_cost

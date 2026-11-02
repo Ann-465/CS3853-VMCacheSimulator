@@ -11,7 +11,7 @@ def pages_system(pages, percent):
     return int(system)
 
 def page_table_entry(memory, page_size):
-    physical_address_bits = math.log2(memory*1024)
+    physical_address_bits = math.log2(memory*1024*1024)
     page_offset_bits = math.log2(page_size)
     physical_frame_bits = physical_address_bits - page_offset_bits + 1
     return int(physical_frame_bits)
