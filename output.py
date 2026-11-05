@@ -53,6 +53,31 @@ def print_header(team_number, trace_file):
     for trace_file in trace_file:
         print(trace_file)
     print()
+    
+def print_virtual_memory_simulation_results(physical_pages_used, pages_available, 
+                                            virtual_pages_mapped, page_table_hits, 
+                                            pages_from_free, total_page_faults):
+    print()
+    print("***** VIRTUAL MEMORY SIMULATION RESULTS *****")
+    print()
+    
+    print(f"{'Physical Pages Used By SYSTEM:':<40}{physical_pages_used}")
+    print(f"{'Pages Available to User:':<40}{pages_available}")
+    print()
+    print(f"{'Virtual Pages Mapped:':<40}{virtual_pages_mapped}")
+    print("\t------------------------------")
+    print(f"{'\tPage Table Hits:':<40}{page_table_hits}")
+    print()
+    print(f"{'\tPages from Free:':<40}{pages_from_free}")
+    print()
+    print(f"{'\tTotal Page Faults:':<40}{total_page_faults}")
+    
+def print_page_table_usage_per_process():
+    print()
+    print("Page Table Usage Per Process:")
+    print("------------------------------")
+    print()
+    
 
 import sys
 
