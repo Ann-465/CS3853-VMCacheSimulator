@@ -66,11 +66,11 @@ def print_virtual_memory_simulation_results(physical_pages_used, pages_available
     print()
     print(f"{'Virtual Pages Mapped:':<40}{virtual_pages_mapped}")
     print("\t------------------------------")
-    print(f"{'\tPage Table Hits:':<40}{page_table_hits}")
+    print(f"{'\tPage Table Hits:':<37}{page_table_hits}")
     print()
-    print(f"{'\tPages from Free:':<40}{pages_from_free}")
+    print(f"{'\tPages from Free:':<37}{pages_from_free}")
     print()
-    print(f"{'\tTotal Page Faults:':<40}{total_page_faults}")
+    print(f"{'\tTotal Page Faults:':<37}{total_page_faults}")
     
 def print_page_table_usage_per_process():
     print()
