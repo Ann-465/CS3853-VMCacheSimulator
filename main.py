@@ -164,16 +164,16 @@ def main():
         for i, line in enumerate(trace_data):
             if i % 2 == 0:
                 components = line.strip().split()
-                instruction_length.append(int(components[2][1:3]))
-                value_addresses.append(int(components[3]))
+                instruction_length.append(int(components[1][1:3]))
+                value_addresses.append(int(components[2], 16))
             else:
                 components = line.strip().split()
                 if components[2] != "--------":
                     instruction_length.append(int(4))
-                    value_addresses.append(int(components[1]))
+                    value_addresses.append(int(components[1], 16))
                 if components[5] != "--------":
                     instruction_length.append(int(4))
-                    value_addresses.append(int(components[4]))
+                    value_addresses.append(int(components[4], 16))
 
 
 if __name__ == "__main__":
