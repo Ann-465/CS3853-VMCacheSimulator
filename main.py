@@ -141,11 +141,9 @@ def main():
             print_virtual_memory_simulation_results(pages_used_by_system, 
                                                     pages_available_user)
             
-            print_virtual_pages_mapped(1, 2, 
-                                3, 4)
+            print_virtual_pages_mapped(1, 2, 3, 4)
             
             for num, trace_file in enumerate(trace_files):
-                # Assuming you have calculated used_page, percent_used, and page_wasted for each trace file
                 used_page = 100  # Placeholder value
                 percent_used = 75.0  # Placeholder value
                 page_wasted = 1024  # Placeholder value
