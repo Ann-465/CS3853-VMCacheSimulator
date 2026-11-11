@@ -171,8 +171,6 @@ def main():
                 if components[5] != "--------":
                     instruction_length.append(int(4))
                     value_addresses.append(components[4])
-    print(instruction_length)
-    print(value_addresses)
 
 
 if __name__ == "__main__":
