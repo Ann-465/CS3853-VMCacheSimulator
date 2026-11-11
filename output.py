@@ -72,11 +72,15 @@ def print_virtual_memory_simulation_results(physical_pages_used, pages_available
     print()
     print(f"{'\tTotal Page Faults:':<37}{total_page_faults}")
     
-def print_page_table_usage_per_process():
+def print_page_table_usage_per_process(files, used_page, percent_used, page_wasted):
     print()
     print("Page Table Usage Per Process:")
     print("------------------------------")
-    print()
+    for num, file, in enumerate(files):
+        print(f"[{num}] {file}:")
+        print(f"\tUsed Page Table Entries: {used_page} ( {percent_used}%)")
+        print(f"\tPage Table Wasted: {page_wasted} bytes")
+        print()
     
 
 import sys
