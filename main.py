@@ -153,18 +153,17 @@ def main():
     
     instruction_length = []
     value_addresses = []
-
 #Parsing through each trace file and placed inside instruction_length and value_addresses lists
     for trace_file in trace_files:
         print(f"Processing trace file: {trace_file}")
         with open(trace_file, "r") as f:
             trace_data = f.readlines()
         for i, line in enumerate(trace_data):
-            if i % 2 == 0:
+            if i % 3 == 0:
                 components = line.strip().split()
                 instruction_length.append(int(components[1][1:3]))
                 value_addresses.append(components[2])
-            else:
+            elif i % 3 == 1:
                 components = line.strip().split()
                 if components[2] != "--------":
                     instruction_length.append(int(4))
@@ -172,8 +171,8 @@ def main():
                 if components[5] != "--------":
                     instruction_length.append(int(4))
                     value_addresses.append(components[4])
-    
-
+    print(instruction_length)
+    print(value_addresses)
 
 
 if __name__ == "__main__":
