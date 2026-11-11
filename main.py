@@ -18,7 +18,13 @@ from output import (
     print_cache_calculated_values,
     print_physical_memory_values,
     print_virtual_memory_simulation_results,
+    print_virtual_pages_mapped,
     print_page_table_usage_per_process
+)
+
+from pages_available import (
+    physical_pages_used_by_system,
+    pages_available_to_user
 )
 
 def parse_arguments():
@@ -101,6 +107,10 @@ def main():
     page_table_bytes = ram_page_table(
         cache_size, len(trace_files), pte_bits
     )
+    
+    pages_used_by_system = physical_pages_used_by_system(num_physical_pages, system_percent)
+    
+    pages_available_user = pages_available_to_user(num_physical_pages, num_system_pages)
 
     # Print results
     with open("output.txt", "w") as f:
@@ -128,9 +138,9 @@ def main():
                     pte_bits, page_table_bytes
                 )
             
-            print_virtual_memory_simulation_results(1, 2, 3, 4, 5, 6)
-            
-            print_page_table_usage_per_process(trace_files, 3, 4, 5)
+            print_virtual_memory_simulation_results(pages_used_by_system, 
+                                                    pages_available_user)
+
 
 
 if __name__ == "__main__":
