@@ -72,16 +72,15 @@ def print_virtual_pages_mapped(virtual_pages_mapped, page_table_hits,
     print(f"{'\tPages from Free:':<37}{pages_from_free}")
     print()
     print(f"{'\tTotal Page Faults:':<37}{total_page_faults}")
-    
-def print_page_table_usage_per_process(files, used_page, percent_used, page_wasted):
     print()
     print("Page Table Usage Per Process:")
     print("------------------------------")
-    for num, file, in enumerate(files):
-        print(f"[{num}] {file}:")
-        print(f"\tUsed Page Table Entries: {used_page} ( {percent_used}%)")
-        print(f"\tPage Table Wasted: {page_wasted} bytes")
-        print()
+    
+def print_page_table_usage_per_process(num, file,used_page, percent_used, page_wasted):
+    print(f"[{num}] {file}:")
+    print(f"\tUsed Page Table Entries: {used_page} ( {percent_used}%)")
+    print(f"\tPage Table Wasted: {page_wasted} bytes")
+    print()
     
 
 import sys
