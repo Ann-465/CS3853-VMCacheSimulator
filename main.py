@@ -146,6 +146,7 @@ def main():
     instruction_length = []
     value_addresses = []
 
+#Parsing through each trace file and placed inside instruction_length and value_addresses lists
     for trace_file in trace_files:
         print(f"Processing trace file: {trace_file}")
         with open(trace_file, "r") as f:
