@@ -155,15 +155,17 @@ def main():
             if i % 2 == 0:
                 components = line.strip().split()
                 instruction_length.append(int(components[1][1:3]))
-                value_addresses.append(int(components[2], 16))
+                value_addresses.append(components[2])
             else:
                 components = line.strip().split()
                 if components[2] != "--------":
                     instruction_length.append(int(4))
-                    value_addresses.append(int(components[1], 16))
+                    value_addresses.append(components[1])
                 if components[5] != "--------":
                     instruction_length.append(int(4))
-                    value_addresses.append(int(components[4], 16))
+                    value_addresses.append(components[4])
+    
+
 
 
 if __name__ == "__main__":
