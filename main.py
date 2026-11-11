@@ -16,7 +16,9 @@ from output import (
     print_header,
     print_input_parameters,
     print_cache_calculated_values,
-    print_physical_memory_values
+    print_physical_memory_values,
+    print_virtual_memory_simulation_results,
+    print_page_table_usage_per_process
 )
 
 def parse_arguments():
@@ -125,6 +127,10 @@ def main():
                     num_physical_pages, num_system_pages,
                     pte_bits, page_table_bytes
                 )
+            
+            print_virtual_memory_simulation_results(1, 2, 3, 4, 5, 6)
+            
+            print_page_table_usage_per_process(trace_files, 3, 4, 5)
 
 
 if __name__ == "__main__":
