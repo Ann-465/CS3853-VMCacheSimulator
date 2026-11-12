@@ -65,7 +65,7 @@ class PhysicalMemoryManager:
         return released
 
     def get_page_from_free(self):
-        return len(self.pages_from_free)
+        return self.pages_from_free
 
     def get_page_faults(self):
         return self.page_faults

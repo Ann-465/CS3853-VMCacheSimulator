@@ -22,10 +22,15 @@ from output import (
     print_page_table_usage_per_process
 )
 
+import page_table
 from pages_available import (
     physical_pages_used_by_system,
     pages_available_to_user
 )
+
+from page_table import PageTable
+
+from virtual_memo import PhysicalMemoryManager
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='VM Cache Simulator')
@@ -111,6 +116,64 @@ def main():
     pages_used_by_system = physical_pages_used_by_system(num_physical_pages, system_percent)
     
     pages_available_user = pages_available_to_user(num_physical_pages, num_system_pages)
+    
+    page_tables = [PageTable() for _ in trace_files]
+    
+    memory_manager = PhysicalMemoryManager(num_physical_pages, num_system_pages, 
+                                           pages_available_user)
+    page_table_hits = 0
+    
+    virtual_pages_mapped = 0
+    
+    for process_id, trace_file in enumerate(trace_files):
+        
+        page_table = page_tables[process_id]
+        
+        with open(trace_file, "r") as f:
+            lines = [line.strip() for line in f.readlines() if line.strip()]
+            
+        for i in range(0, len(lines), 2):
+            if i + 1 >= len(lines):
+                break
+            
+            eip_parts = lines[i].split()
+            mem_parts = lines[i + 1].split()
+            
+            if len(eip_parts) < 3 or len(mem_parts) < 6:
+                continue
+            
+            address = []
+            
+            address.append(int(eip_parts[2], 16))
+            
+            if mem_parts[2] != "--------":
+                address.append(int(mem_parts[1], 16))
+            
+            if mem_parts[5] != "--------":
+                address.append(int(mem_parts[4], 16))
+                
+            for addr in address:
+                virtual_page = page_table.get_page_number(addr)
+                
+                physical_page = page_table.lookup(virtual_page)
+                
+                if physical_page is not None:
+                    page_table_hits += 1
+                else:
+                    physical_page, old_page = memory_manager.allocate_page(process_id, virtual_page)
+                    
+                    if old_page is not None:
+                        old_process_id, old_virtual_page = old_page
+                        old_process_table = page_tables[old_process_id]
+                        old_process_table.unmap_page(old_virtual_page)
+                        
+                    page_table.map_page(virtual_page, physical_page)
+                    
+                    virtual_pages_mapped += 1
+                    
+                    
+                        
+                        
 
     # Print results
     with open("output.txt", "w") as f:
@@ -141,36 +204,39 @@ def main():
             print_virtual_memory_simulation_results(pages_used_by_system, 
                                                     pages_available_user)
             
-            print_virtual_pages_mapped(1, 2, 3, 4)
+            print_virtual_pages_mapped(virtual_pages_mapped, page_table_hits,
+                                       memory_manager.pages_from_free, memory_manager.page_faults)
             
             for num, trace_file in enumerate(trace_files):
-                used_page = 100  # Placeholder value
-                percent_used = 75.0  # Placeholder value
-                page_wasted = 1024  # Placeholder value
-                print_page_table_usage_per_process(num, trace_file, used_page, percent_used, page_wasted)
+                page_table = page_tables[num]
+                used_page = page_table.used_entries()
+                percent_used = page_table.usage_percentage()
+                page_wasted = page_table.wasted_bytes(pte_bits)
+                print_page_table_usage_per_process(num, trace_file, used_page, 
+                                                   percent_used, page_wasted)
 
 
     
-    instruction_length = []
-    value_addresses = []
-#Parsing through each trace file and placed inside instruction_length and value_addresses lists
-    for trace_file in trace_files:
-        print(f"Processing trace file: {trace_file}")
-        with open(trace_file, "r") as f:
-            trace_data = f.readlines()
-        for i, line in enumerate(trace_data):
-            if i % 3 == 0:
-                components = line.strip().split()
-                instruction_length.append(int(components[1][1:3]))
-                value_addresses.append(components[2])
-            elif i % 3 == 1:
-                components = line.strip().split()
-                if components[2] != "--------":
-                    instruction_length.append(int(4))
-                    value_addresses.append(components[1])
-                if components[5] != "--------":
-                    instruction_length.append(int(4))
-                    value_addresses.append(components[4])
+#     instruction_length = []
+#     value_addresses = []
+# #Parsing through each trace file and placed inside instruction_length and value_addresses lists
+#     for trace_file in trace_files:
+#         print(f"Processing trace file: {trace_file}")
+#         with open(trace_file, "r") as f:
+#             trace_data = f.readlines()
+#         for i, line in enumerate(trace_data):
+#             if i % 3 == 0:
+#                 components = line.strip().split()
+#                 instruction_length.append(int(components[1][1:3]))
+#                 value_addresses.append(components[2])
+#             elif i % 3 == 1:
+#                 components = line.strip().split()
+#                 if components[2] != "--------":
+#                     instruction_length.append(int(4))
+#                     value_addresses.append(components[1])
+#                 if components[5] != "--------":
+#                     instruction_length.append(int(4))
+#                     value_addresses.append(components[4])
 
 
 if __name__ == "__main__":

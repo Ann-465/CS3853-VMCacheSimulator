@@ -78,7 +78,7 @@ def print_virtual_pages_mapped(virtual_pages_mapped, page_table_hits,
     
 def print_page_table_usage_per_process(num, file,used_page, percent_used, page_wasted):
     print(f"[{num}] {file}:")
-    print(f"\tUsed Page Table Entries: {used_page} ( {percent_used}%)")
+    print(f"\tUsed Page Table Entries: {used_page} ( {percent_used:.2f}%)")
     print(f"\tPage Table Wasted: {page_wasted} bytes")
     print()
     
